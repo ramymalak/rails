@@ -40,7 +40,18 @@
    </tr>  
 </table><br><br>
 _____________________________________________________________________________________________________________________
+<br>
 
 
+
+
+
+<<<<<<< HEAD
+<br>
 <%= link_to 'Edit', edit_group_event_path(@group,@event) %>
 <%= link_to 'Delete', group_event_path(@group,@event), method: :delete, data: { confirm: 'Are you sure?' } %>
+=======
+<%= link_to 'Edit', edit_group_event_path( @event.group , @event )  %>|
+
+<%= link_to 'Back', group_events_path %>
+>>>>>>> f23e78cf92b64d532bffebcca98f2a4472f1a2a2

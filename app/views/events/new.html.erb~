@@ -1,5 +1,4 @@
 <h1>New Event</h1>
-<%= @event.inspect %>
 <%= form_for([@group,@event]) do |f| %>
   <% if @event.errors.any? %>
     <div id="error_explanation">
@@ -38,3 +37,7 @@
 <% end %>
 
 
+<<<<<<< HEAD
+=======
+<%= link_to 'Back', group_events_path %>
+>>>>>>> f23e78cf92b64d532bffebcca98f2a4472f1a2a2

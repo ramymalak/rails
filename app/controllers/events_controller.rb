@@ -14,6 +14,7 @@ class EventsController < ApplicationController
   def show
   @group = Group.find(params[:group_id])
   @photos = Photo.where(event_id: params[:id])
+
   end
 
   # GET /events/new
@@ -25,8 +26,10 @@ class EventsController < ApplicationController
 
   # GET /events/1/edit
   def edit
+
      @group = Group.find(params[:group_id])
      @event = Event.find(params[:id])
+		
   end
 
   # POST /events
@@ -36,6 +39,7 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
     @event.save
     redirect_to group_path(@group)
+
   end
 
   # PATCH/PUT /events/1
@@ -56,7 +60,6 @@ class EventsController < ApplicationController
     @event.destroy
     @group = Group.find(params[:group_id])
     redirect_to group_events_path(@group)
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -1,5 +1,16 @@
 Rails.application.routes.draw do
 
+
+get "log_out" => "users#logout", :as => "log_out"
+get "log_in" => "users#login", :as => "log_in"
+get "sign_up" => "users#new", :as => "sign_up"
+
+
+post "auth" => "users#auth", :as => "auth"
+
+root :to => "users#login"
+
+
   resources :users
 
 resources :groups do

@@ -1,5 +1,5 @@
+<%= form_for([@group, @events]) do |f| %>
 
-<%= form_for :event , url: group_event_path(@group,@event) ,:method => :put do |f| %>
   <% if @event.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
@@ -21,7 +21,8 @@
     <%= f.text_field :place %>
   </div>
   <div class="field">
-    <%= f.hidden_field :group_id %>
+    <%= f.label :group_id %><br>
+    <%= f.text_field :group_id %>
   </div>
   <div class="field">
     <%= f.label :description %><br>
@@ -35,9 +36,3 @@
     <%= f.submit %>
   </div>
 <% end %>
-
-<<<<<<< HEAD
-=======
-
-<%= link_to 'Back', group_events_path %>
->>>>>>> f23e78cf92b64d532bffebcca98f2a4472f1a2a2
