@@ -23,7 +23,29 @@
 <p>
   <strong>Date:</strong>
   <%= @event.date %>
-</p>
+</p><br>
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
+<%= form_for :photo ,url: group_event_photos_path(@group,@event) do |f| %>
+  <%= f.file_field :avatar %>
+  <%= f.submit %>
+  <%= f.hidden_field :event_id, :value => @event.id %> 
+  <% end %>
+
+<br><br>
+<table>
+  <tr>
+    <% @photos.each do |photo| %>
+        <td><%= image_tag photo.avatar.url(:thumb) %></td>
+    <% end %>
+   </tr>  
+</table><br><br>
+_____________________________________________________________________________________________________________________
+<br>
+
+
+
+
+
+<br>
+<%= link_to 'Edit', edit_group_event_path(@group,@event) %>
+<%= link_to 'Delete', group_event_path(@group,@event), method: :delete, data: { confirm: 'Are you sure?' } %>

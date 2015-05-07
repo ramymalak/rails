@@ -1,0 +1,46 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @event.name %>
+</p>
+
+<p>
+  <strong>Place:</strong>
+  <%= @event.place %>
+</p>
+
+<p>
+  <strong>Group:</strong>
+  <%= @event.group %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @event.description %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @event.date %>
+</p><br>
+
+<%= form_for :photo ,url: group_event_photos_path(@group,@event) do |f| %>
+  <%= f.file_field :avatar %>
+  <%= f.submit %>
+  <%= f.hidden_field :event_id, :value => @event.id %> 
+  <% end %>
+
+<br><br>
+<table>
+  <tr>
+    <% @photos.each do |photo| %>
+        <td><%= image_tag photo.avatar.url(:thumb) %></td>
+    <% end %>
+   </tr>  
+</table><br><br>
+_____________________________________________________________________________________________________________________
+
+
+<%= link_to 'Edit', edit_group_event_path(@group,@event) %>
+<%= link_to 'Delete', group_event_path(@group,@event), method: :delete, data: { confirm: 'Are you sure?' } %>
