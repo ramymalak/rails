@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20150506224827) do
-=======
 ActiveRecord::Schema.define(version: 20150508054248) do
->>>>>>> f23e78cf92b64d532bffebcca98f2a4472f1a2a2
 
   create_table "cities", force: :cascade do |t|
     t.string   "name",       limit: 255

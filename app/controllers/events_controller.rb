@@ -6,6 +6,7 @@ class EventsController < ApplicationController
   def index
     @group = Group.find(params[:group_id])
     @events = Event.where(group_id: params[:group_id])
+    @groups = Group.all
 
   end
 
@@ -14,6 +15,8 @@ class EventsController < ApplicationController
   def show
   @group = Group.find(params[:group_id])
   @photos = Photo.where(event_id: params[:id])
+  @comments = Comment.where(event_id: params[:id])
+  @users=User.all
 
   end
 
@@ -60,6 +63,7 @@ class EventsController < ApplicationController
     @event.destroy
     @group = Group.find(params[:group_id])
     redirect_to group_events_path(@group)
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

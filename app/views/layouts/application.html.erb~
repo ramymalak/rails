@@ -9,6 +9,7 @@
 
 
 <body>
+
 <% if session[:user_id] %>
 <p><font color='green'>**** Logged in ^_^ </font></p>
 <%else %>

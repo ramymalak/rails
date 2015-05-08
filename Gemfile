@@ -1,6 +1,9 @@
 source 'https://rubygems.org'
 
 gem "paperclip", "~> 4.2"
+
+gem 'twitter-bootstrap-rails'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
 # Use mysql as the database for Active Record

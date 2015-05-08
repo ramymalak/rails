@@ -23,7 +23,6 @@ class CommentsController < ApplicationController
   @event = Event.find(params[:event_id])
   @photos = Photo.where(event_id: params[:event_id])
   @comments = Comment.where(event_id: params[:event_id])
-  @comment = Comment.find(params[:id])
   @users=User.all
   end
 

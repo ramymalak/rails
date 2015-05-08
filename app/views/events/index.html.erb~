@@ -18,24 +18,18 @@
       <tr>
         <td><%= event.name %></td>
         <td><%= event.place %></td>
-        <td><%= event.group %></td>
+	<% @groups.each do |group| %>
+		<%  if(event.group_id==group.id) %>
+	             <td><%= group.name %></td>
+		<%end%>
+	<%end%>
+      
         <td><%= event.description %></td>
         <td><%= event.date %></td>
-<<<<<<< HEAD
         <td><%= link_to 'Show', group_event_path(@group,event) %></td>
         <td><%= link_to 'Edit', edit_group_event_path(@group,event) %></td>
         <td><%= link_to 'Destroy', group_event_path(@group,event), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-=======
 
-
-
-<td><%= link_to 'Show', [event.group, event] %></td>
-<td><%= link_to 'Edit',       edit_group_event_path( event.group , event ) %></td> %></td>
-    <td>  <%= link_to 'Destroy Event', [event.group, event],
-               method: :delete,
-               data: { confirm: 'Are you sure?' } %></td>
-
->>>>>>> f23e78cf92b64d532bffebcca98f2a4472f1a2a2
       </tr>
     <% end %>
   </tbody>
