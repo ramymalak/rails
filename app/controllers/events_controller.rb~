@@ -26,8 +26,7 @@ class EventsController < ApplicationController
   # GET /events/1/edit
   def edit
 		@group = Group.find(params[:group_id])
-#		@event = @group.events.find(params[:id])
-#@group = Event.find(params[:event_id]).group
+		@event = @group.events.find(params[:id])
 		
   end
 

@@ -26,7 +26,7 @@
 
 
 <td><%= link_to 'Show', [event.group, event] %></td>
-<td><%= link_to 'Edit',       edit_group_event_path( event.group , event ) %></td> %></td>
+<td><%= link_to 'Edit',       edit_group_event_path( event,group , event ) %></td> %></td>
     <td>  <%= link_to 'Destroy Event', [event.group, event],
                method: :delete,
                data: { confirm: 'Are you sure?' } %></td>
