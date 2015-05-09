@@ -4,78 +4,65 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all
+    @group = Group.find(params[:group_id])
+    @events = Event.where(group_id: params[:group_id])
+    @groups = Group.all
+
   end
 
   # GET /events/1
   # GET /events/1.json
   def show
-#--------------
-		@group = Group.find(params[:group_id])
-		@event = @group.events.find(params[:id])
-		#redirect_to group_event_path(@event);
-	
+  @group = Group.find(params[:group_id])
+  @photos = Photo.where(event_id: params[:id])
+  @comments = Comment.where(event_id: params[:id])
+  @users=User.all
+
   end
 
   # GET /events/new
   def new
     @group = Group.find(params[:group_id])
+    @events = Event.all
     @event = Event.new
   end
 
   # GET /events/1/edit
   def edit
-		@group = Group.find(params[:group_id])
-#		@event = @group.events.find(params[:id])
-#@group = Event.find(params[:event_id]).group
+
+     @group = Group.find(params[:group_id])
+     @event = Event.find(params[:id])
 		
   end
 
   # POST /events
   # POST /events.json
   def create
+    @group = Group.find(params[:group_id])
+    @event = Event.new(event_params)
+    @event.save
+    redirect_to group_path(@group)
 
-		@group = Group.find(params[:group_id])
-		@event = @group.events.create(event_params)   
-#		redirect_to article_path(@article)
-
-
-  #  @event = Event.new(event_params)
-
-    respond_to do |format|
-#1      if @event.save
-   if @event
-        format.html { redirect_to group_events_url, notice: 'Event was successfully created.' }
-        format.json { render :show, status: :created, location: @event }
-      else
-        format.html { render :new }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # PATCH/PUT /events/1
   # PATCH/PUT /events/1.json
   def update
-    respond_to do |format|
-      if @event.update(event_params)
-        format.html { redirect_to group_events_url, notice: 'Event was successfully updated.' }
-        format.json { render :show, status: :ok, location: @event }
-      else
-        format.html { render :edit }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
-      end
-    end
+     @event.update(event_params)
+     @group = Group.find(params[:group_id])
+     redirect_to group_event_path(@group,@event)
   end
 
   # DELETE /events/1
   # DELETE /events/1.json
   def destroy
+    @photos = Photo.where(event_id: params[:id])
+    @photos.each do |photo|
+         photo.destroy
+     end    
     @event.destroy
-    respond_to do |format|
-      format.html { redirect_to group_events_url, notice: 'Event was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @group = Group.find(params[:group_id])
+    redirect_to group_events_path(@group)
   end
 
   private

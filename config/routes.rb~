@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
 
+<<<<<<< HEAD
 get "log_out" => "users#logout", :as => "log_out"
 get "log_in" => "users#login", :as => "log_in"
 get "sign_up" => "users#new", :as => "sign_up"
@@ -14,6 +15,8 @@ root :to => "users#login"
 
   resources :users
 
+=======
+>>>>>>> 4e2de19ecae0cb53b34c9ad9239b87d9351bdc8b
 resources :groups do
 		resources :events do
 			resources :comments

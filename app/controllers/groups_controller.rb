@@ -5,6 +5,9 @@ class GroupsController < ApplicationController
   # GET /groups.json
   def index
     @groups = Group.all
+    @cities = City.all
+    @countries = Country.all
+    @users = User.all
   end
 
   # GET /groups/1

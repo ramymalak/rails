@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy , :confirmation_pro]
+  before_action :set_user, only: [:show, :edit, :update, :destroy ]
 
   # GET /users
   # GET /users.json
@@ -28,7 +28,7 @@ def auth
 
     user = User.authenticate(params[:email], params[:password])
     if (user)
-        if  user.isConf == 1
+        if ( user.isConf )
           session[:user_id] = user.id
           session[:user_username] = user.username
           session[:user_isAdmin] = user.isAdmin

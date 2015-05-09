@@ -17,6 +17,7 @@ root :to => "users#login"
 resources :groups do
 		resources :events do
 			resources :comments
+                        resources :photos
 		end
 	end
   # The priority is based upon order of creation: first created -> highest priority.
