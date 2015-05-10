@@ -9,6 +9,11 @@ class User < ActiveRecord::Base
 
 
 
+  validates_presence_of :username , :email, :password ,:age , :city , :country, :gender 
+  validates_uniqueness_of :email
+
+
+
 attr_accessor :password
   before_save :encrypt_password
 

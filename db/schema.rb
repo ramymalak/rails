@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20150508162939) do
   add_index "attendees", ["event_id"], name: "index_attendees_on_event_id", using: :btree
   add_index "attendees", ["user_id"], name: "index_attendees_on_user_id", using: :btree
 
+
   create_table "cities", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.integer  "country_id", limit: 4
