@@ -11,8 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20150508162939) do
+ActiveRecord::Schema.define(version: 20150510173136) do
 
   create_table "attendees", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
@@ -23,7 +22,6 @@ ActiveRecord::Schema.define(version: 20150508162939) do
 
   add_index "attendees", ["event_id"], name: "index_attendees_on_event_id", using: :btree
   add_index "attendees", ["user_id"], name: "index_attendees_on_user_id", using: :btree
-
 
   create_table "cities", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -77,6 +75,16 @@ ActiveRecord::Schema.define(version: 20150508162939) do
   add_index "groups", ["country_id"], name: "index_groups_on_country_id", using: :btree
   add_index "groups", ["user_id"], name: "index_groups_on_user_id", using: :btree
 
+  create_table "interests", force: :cascade do |t|
+    t.integer  "group_id",   limit: 4
+    t.integer  "tag_id",     limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "interests", ["group_id"], name: "index_interests_on_group_id", using: :btree
+  add_index "interests", ["tag_id"], name: "index_interests_on_tag_id", using: :btree
+
   create_table "photos", force: :cascade do |t|
     t.integer  "event_id",            limit: 4
     t.datetime "created_at",                      null: false
@@ -123,6 +131,8 @@ ActiveRecord::Schema.define(version: 20150508162939) do
   add_foreign_key "groups", "cities"
   add_foreign_key "groups", "countries"
   add_foreign_key "groups", "users"
+  add_foreign_key "interests", "groups"
+  add_foreign_key "interests", "tags"
   add_foreign_key "photos", "events"
   add_foreign_key "users", "cities"
   add_foreign_key "users", "countries"

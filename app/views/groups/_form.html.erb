@@ -1,6 +1,7 @@
 <div class="container">
     <div class="panel panel-warning col-sm-6 col-sm-offset-3 ">
-
+<% @countries = Country.all %>
+<% @cities = City.all %>
 
       <%= form_for(@group) do |f| %>
         <% if @group.errors.any? %>
@@ -21,11 +22,11 @@
         </div>
         <div class="field">
           <h5><%= f.label :country_id %></h5>
-          <%= f.text_field :country_id ,:class=> "form-control"%>
+          <%= f.collection_select :country_id, @countries.order(:name),:id,:name, include_blank: true %>
         </div>
         <div class="field">
           <h5><%= f.label :city_id %></h5>
-          <%= f.text_field :city_id ,:class=> "form-control"%>
+          <%= f.collection_select :city_id, @cities.order(:name),:id,:name, include_blank: true %>
         </div>
         <div class="field">
           <h5><%= f.label :description %></h5>

@@ -1,29 +1,30 @@
-<p id="notice"><%= notice %></p>
+<div class="panel panel-default panel-body col-sm-6 col-sm-offset-3">
 
 <p>
-  <strong>Name:</strong>
-  <%= @group.name %>
+  <h3 style='color:#8A6D3B;'><strong>Name:</strong></h3>
+  &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <h4><%= @group.name %></h4>
 </p>
 
 <p>
-  <strong>Country:</strong>
-  <%= @group.country %>
+  <h3 style='color:#8A6D3B;'><strong>Country:</strong></h3>
+  &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <h4><%= @group.country.name %></h4>
 </p>
 
 <p>
-  <strong>City:</strong>
-  <%= @group.city %>
+  <h3 style='color:#8A6D3B;'><strong>City:</strong></h3>
+  &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <h4><%= @group.city.name %></h4>
 </p>
 
 <p>
-  <strong>Description:</strong>
-  <%= @group.description %>
+  <h3 style='color:#8A6D3B;'><strong>Description:</strong></h3>
+  &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <h4><%= @group.description %></h4>
 </p>
 
 <p>
-  <strong>User:</strong>
-  <%= @group.user %>
+  <h3 style='color:#8A6D3B;'><strong>User:</strong></h3>
+  &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <h4><%= @group.user.username %></h4>
 </p>
-
-<%= link_to 'Edit', edit_group_path(@group) %> |
-<%= link_to 'Back', groups_path %>
+<div style="float:right;">
+<%= link_to 'Edit', edit_group_path(@group) , :class=> 'btn btn-warning'%> |
+<%= link_to 'Back', groups_path , :class=> 'btn btn-success' %>
+</div>

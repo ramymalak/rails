@@ -17,6 +17,7 @@ class GroupsController < ApplicationController
 
   # GET /groups/new
   def new
+    @tags = Tag.all
     @group = Group.new
   end
 
@@ -28,10 +29,15 @@ class GroupsController < ApplicationController
   # POST /groups.json
   def create
     @group = Group.new(group_params)
-
+    @data=(params['group']['lol']).split(':')
     respond_to do |format|
       if @group.save
-        format.html { redirect_to @group, notice: 'Group was successfully created.' }
+        @data.each do |x|
+          if (x!="")
+            @i = Interest.create(group_id: @group.id, tag_id: x)
+          end
+        end  
+        format.html { redirect_to @group, notice: params['group']['lol']}
         format.json { render :show, status: :created, location: @group }
       else
         format.html { render :new }
@@ -75,7 +81,11 @@ class GroupsController < ApplicationController
         end
 
          event.destroy
-     end  
+     end
+     @interests = Interest.where(group_id: params[:id])  
+     @interests.each do |interest|
+          interest.destroy
+     end
      @group.destroy
     respond_to do |format|
       format.html { redirect_to groups_url, notice: 'Group was successfully destroyed.' }
@@ -91,6 +101,6 @@ class GroupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
-      params.require(:group).permit(:name, :country_id, :city_id, :description, :user_id)
+      params.require(:group).permit(:name, :country_id, :city_id, :description, :user_id )
     end
 end
