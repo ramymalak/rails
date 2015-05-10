@@ -1,40 +1,43 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Events</h1>
+<div class=" col-sm-10 col-sm-offset-1 ">
+<h1 style='color:#8A6D3B;'><strong>Listing Events</strong></h1>
+  <div class="panel-body">
+    <table class='table table-bordered  table-responsive table-striped col-sm-9'>
+      <thead>
+        <tr>
+          <th><h3 style='color:#8A6D3B;'>Name</strong></h3></th>
+          <th><h3 style='color:#8A6D3B;'>Place</strong></h3></th>
+          <th><h3 style='color:#8A6D3B;'>Group</strong></h3></th>
+          <th><h3 style='color:#8A6D3B;'>Description</strong></h3></th>
+          <th><h3 style='color:#8A6D3B;'>Date</strong></h3></th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @events.each do |event| %>
+          <tr>
+            <td><h4><%= event.name %></h4></td>
+            <td><h4><%= event.place %></h4></td>
+    	<% @groups.each do |group| %>
+    		<%  if(event.group_id==group.id) %>
+    	             <td><h4><%= group.name %></h4></td>
+    		<%end%>
+    	<%end%>
+          
+            <td><h4><%= event.description %></h4></td>
+            <td><h4><%= event.date %></h4></td>
+            <td><%= link_to 'Show', group_event_path(@group,event) ,:class=> 'btn btn-success'%>
+                <%= link_to 'Edit', edit_group_event_path(@group,event) ,:class=> 'btn btn-warning' %>
+                <%= link_to 'Destroy', group_event_path(@group,event), method: :delete, data: { confirm: 'Are you sure?' },:class=> 'btn btn-danger' %></td>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Place</th>
-      <th>Group</th>
-      <th>Description</th>
-      <th>Date</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @events.each do |event| %>
-      <tr>
-        <td><%= event.name %></td>
-        <td><%= event.place %></td>
-	<% @groups.each do |group| %>
-		<%  if(event.group_id==group.id) %>
-	             <td><%= group.name %></td>
-		<%end%>
-	<%end%>
-      
-        <td><%= event.description %></td>
-        <td><%= event.date %></td>
-        <td><%= link_to 'Show', group_event_path(@group,event) %></td>
-        <td><%= link_to 'Edit', edit_group_event_path(@group,event) %></td>
-        <td><%= link_to 'Destroy', group_event_path(@group,event), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
 <br>
 
-<%= link_to 'New Event', new_group_event_path %>
+<div class="panel-heading "><h1><strong><%= link_to 'New Event', new_group_event_path ,:class=> 'btn btn-info col-sm-offset-5'%>
+</strong></h1></div>

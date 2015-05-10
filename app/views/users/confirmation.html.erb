@@ -1,0 +1,30 @@
+
+<p id="notice"><%= notice %></p>
+
+<%= params[:key] %>
+
+
+<h1>Confirmation</h1>
+
+
+<%= form_tag confirmation_pro_path do %>
+  
+  <p>
+    <%= label_tag :Enter_password_to_complete_confirmation_process %><br />
+    <%= password_field_tag :password %>
+
+
+    <%= hidden_field_tag :id ,  params[:key] %>
+
+    <%= hidden_field_tag :isConf ,  1 %>
+
+  </p>
+  <p class="button"><%= submit_tag "submit" %></p>
+<% end %>
+
+
+
+
+
+
+

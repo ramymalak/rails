@@ -4,7 +4,8 @@ Rails.application.routes.draw do
 get "log_out" => "users#logout", :as => "log_out"
 get "log_in" => "users#login", :as => "log_in"
 get "sign_up" => "users#new", :as => "sign_up"
-
+get 'confirmation/:key' => 'users#confirmation' ,:as => "confirmation"
+post 'confirmation_pro' => 'users#confirmation_pro'
 
 post "auth" => "users#auth", :as => "auth"
 
@@ -12,11 +13,12 @@ root :to => "users#login"
 
 
   resources :users
+  resources :attendees
 
 resources :groups do
 		resources :events do
-			resources :comments
-                        resources :photos
+  			resources :comments
+        resources :photos
 		end
 	end
   # The priority is based upon order of creation: first created -> highest priority.
