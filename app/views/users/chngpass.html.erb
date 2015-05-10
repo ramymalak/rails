@@ -1,0 +1,39 @@
+
+<p id="notice"><%= notice %></p>
+
+
+
+<h1>Change Password</h1>
+
+
+<%= form_tag chng_pass_pro_path do %>
+  
+   <div class="field">
+    <%= label_tag :Current_password %><br />
+    <%= password_field_tag :oldpassword %>
+   </div>
+
+   <div class="field">
+	<%= label_tag :New_password %><br />
+    <%= password_field_tag :password %>
+   </div>
+
+
+   <div class="field">
+	<%= label_tag :Reply_new_password %><br />
+    <%= password_field_tag :password_conf %>
+   </div>
+
+
+
+
+  </p>
+  <p class="button"><%= submit_tag "submit" %></p>
+<% end %>
+
+
+
+
+
+
+

@@ -1,6 +1,13 @@
 <h1>Editing User</h1>
 
-<%= render 'form' %>
+<%= render 'form' , id: params[:id] %>
+
+<%= %>
+
+<p>
+  <strong>Profile picture:</strong>
+<%= image_tag @user.avatar.url(:thumb) %>
+</p>
 
 <%= link_to 'Show', @user %> |
 <%= link_to 'Back', users_path %>
