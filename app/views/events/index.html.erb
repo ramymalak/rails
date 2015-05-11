@@ -28,8 +28,11 @@
             <td><h4><%= event.description %></h4></td>
             <td><h4><%= event.date %></h4></td>
             <td><%= link_to 'Show', group_event_path(@group,event) ,:class=> 'btn btn-success'%>
+            <%if(session[:user_isAdmin]==true) %>
                 <%= link_to 'Edit', edit_group_event_path(@group,event) ,:class=> 'btn btn-warning' %>
-                <%= link_to 'Destroy', group_event_path(@group,event), method: :delete, data: { confirm: 'Are you sure?' },:class=> 'btn btn-danger' %></td>
+                <%= link_to 'Destroy', group_event_path(@group,event), method: :delete, data: { confirm: 'Are you sure?' },:class=> 'btn btn-danger' %>
+             <%end%>   
+                </td>
 
           </tr>
         <% end %>
@@ -38,6 +41,7 @@
   </div>
 </div>
 <br>
-
+<% if session[:user_id]==@group.user_id or session[:user_isAdmin]==true %>
 <div class="panel-heading "><h1><strong><%= link_to 'New Event', new_group_event_path ,:class=> 'btn btn-info col-sm-offset-5'%>
+<%end%>
 </strong></h1></div>

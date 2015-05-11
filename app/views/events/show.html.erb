@@ -36,6 +36,7 @@
 					  <%= f.hidden_field :event_id, :value => @event.id %> 
 				  <% end %>
 				 <br>
+
 				 <div class='col-sm-offset-9'>
 					<%= link_to 'Edit', edit_group_event_path(@group,@event) ,:class=> 'btn btn-success ' %>
 					<%= link_to 'Delete', group_event_path(@group,@event), method: :delete, data: { confirm: 'Are you sure?' } ,:class=> 'btn btn-danger'%> 
@@ -43,7 +44,7 @@
 		<% end %>
 
 		<br>
-		<%  if(session[:user_isAdmin] !=true and @group.user_id != session[:user_id] and @flag==0 ) %>
+		<%  if(current_user and session[:user_isAdmin] !=true and @group.user_id != session[:user_id] and @flag==0 ) %>
 			<%= form_for :attendee ,url: attendees_path do |f| %>
 			  <%=  f.hidden_field :user_id, :value => session[:user_id] %>
 			  <%= f.hidden_field :event_id, :value => @event.id %> 

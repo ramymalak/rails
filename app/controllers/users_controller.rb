@@ -30,7 +30,9 @@ def auth
     if (user)
         if ( user.isConf  ||  user.isAdmin )  #admin or configured normal user
           session[:user_id] = user.id
-         
+          session[:user_username] = user.username
+          session[:user_isAdmin] = user.isAdmin
+          session[:user_isConf] = user.isConf
           redirect_to groups_path, :notice => "Logged in!"
         
         else
