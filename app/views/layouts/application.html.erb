@@ -29,14 +29,6 @@
   <% end %>
 </div>
 
-
-
-<% if session[:user_id] %>
-<p><font color='green'>**** Logged in ^_^ </font></p>
-<%else %>
-<p><font color='red'>**** Sorry you have to login frist >_< </font></p>
-<%end%>
-
 <%= yield %>
 
 </body>

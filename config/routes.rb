@@ -17,11 +17,12 @@ root :to => "users#login"
 
 
   resources :users
+  resources :attendees
 
 resources :groups do
 		resources :events do
-			resources :comments
-                        resources :photos
+  			resources :comments
+        resources :photos
 		end
 	end
   # The priority is based upon order of creation: first created -> highest priority.

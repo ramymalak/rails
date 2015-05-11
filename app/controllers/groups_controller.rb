@@ -57,7 +57,26 @@ class GroupsController < ApplicationController
   # DELETE /groups/1
   # DELETE /groups/1.json
   def destroy
-    @group.destroy
+    
+    @events = Event.where(group_id: params[:id])
+    @events.each do |event|
+         
+        @photos = Photo.where(event_id: event.id)
+        @photos.each do |photo|
+             photo.destroy
+         end  
+        @attendees = Attendee.where(event_id: event.id)  
+        @attendees.each do |attendee|
+             attendee.destroy
+         end  
+        @comments = Comment.where(event_id: event.id)  
+        @comments.each do |comment|
+             comment.destroy
+        end
+
+         event.destroy
+     end  
+     @group.destroy
     respond_to do |format|
       format.html { redirect_to groups_url, notice: 'Group was successfully destroyed.' }
       format.json { head :no_content }

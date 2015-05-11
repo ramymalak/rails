@@ -17,6 +17,13 @@ class EventsController < ApplicationController
   @photos = Photo.where(event_id: params[:id])
   @comments = Comment.where(event_id: params[:id])
   @users=User.all
+  @attendee = Attendee.find_by(user_id: session[:user_id],event_id: params[:id])
+    if(@attendee)
+      @flag=1
+    else
+      @flag=0
+    end   
+
 
   end
 
@@ -41,7 +48,7 @@ class EventsController < ApplicationController
     @group = Group.find(params[:group_id])
     @event = Event.new(event_params)
     @event.save
-    redirect_to group_path(@group)
+    redirect_to group_events_path(@group)
 
   end
 
@@ -59,7 +66,15 @@ class EventsController < ApplicationController
     @photos = Photo.where(event_id: params[:id])
     @photos.each do |photo|
          photo.destroy
-     end    
+     end  
+    @attendees = Attendee.where(event_id: params[:id])  
+    @attendees.each do |attendee|
+         attendee.destroy
+     end  
+    @comments = Comment.where(event_id: params[:id])  
+    @comments.each do |comment|
+         comment.destroy
+    end
     @event.destroy
     @group = Group.find(params[:group_id])
     redirect_to group_events_path(@group)
