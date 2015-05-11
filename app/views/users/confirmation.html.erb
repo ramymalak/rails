@@ -1,7 +1,6 @@
 
 <p id="notice"><%= notice %></p>
 
-<%= params[:key] %>
 
 
 <h1>Confirmation</h1>
@@ -15,8 +14,6 @@
 
 
     <%= hidden_field_tag :id ,  params[:key] %>
-
-    <%= hidden_field_tag :isConf ,  1 %>
 
   </p>
   <p class="button"><%= submit_tag "submit" %></p>

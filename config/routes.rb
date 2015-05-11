@@ -7,6 +7,10 @@ get "sign_up" => "users#new", :as => "sign_up"
 get 'confirmation/:key' => 'users#confirmation' ,:as => "confirmation"
 post 'confirmation_pro' => 'users#confirmation_pro'
 
+get '/users/chng_pass' => 'users#chngpass' ,:as => "chng_pass"
+post '/users/chng_pass' => 'users#chngpass_pro' ,:as => "chng_pass_pro"
+
+
 post "auth" => "users#auth", :as => "auth"
 
 root :to => "users#login"

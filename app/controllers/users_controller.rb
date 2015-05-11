@@ -28,12 +28,9 @@ def auth
 
     user = User.authenticate(params[:email], params[:password])
     if (user)
-        if ( user.isConf )
+        if ( user.isConf  ||  user.isAdmin )  #admin or configured normal user
           session[:user_id] = user.id
-          session[:user_username] = user.username
-          session[:user_isAdmin] = user.isAdmin
-          session[:user_isConf] = user.isConf
-
+         
           redirect_to groups_path, :notice => "Logged in!"
         
         else
@@ -70,17 +67,63 @@ end
 
   # GET /users/1/edit
   def edit
+    id = params[:id]
   end
+
+
+
+  def chngpass
+
+
+  end
+
+
+
+  def chngpass_pro
+
+    notification = ' ' 
+    flag = false
+    #oldPass = User.select("password").where("id = ?", session[:user_id])
+    @user = User.confirmation(session[:user_id], params[:oldpassword])
+
+
+
+
+      if (!@user)
+        notification = "Current password is wrong\n" 
+        flag = true
+      end
+      if (params[:password] != params[:password_conf] )
+        notification = notification.to_s + " New password and its reply don't match!\n"
+        flag = true
+      end
+
+      if flag
+        redirect_to chng_pass_path, :notice => notification
+        return    
+      end
+
+
+
+    password_salt = BCrypt::Engine.generate_salt
+    password_hash = BCrypt::Engine.hash_secret(params[:password], password_salt)
+    User.where(:id =>session[:user_id]).update_all(:password_salt =>password_salt,:password_hash => password_hash ) 
+
+    redirect_to user_path(session[:user_id]), :notice => "Your password was changed successfully"
+  end
+
 
   # POST /users
   # POST /users.json
   def create
     @user = User.new(user_params)
 
+     
+
     respond_to do |format|
       if @user.save
 
-        #if a normal user os signing up, send a confirmation email
+        #if a normal user is signing up, send a confirmation email
         if (!current_user )
             UserNotifier.send_signup_email(@user).deliver!
             format.html { render :confirmation_process }
@@ -154,6 +197,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:username, :email, :password, :age, :gender, :country_id, :city_id, :isAdmin, :isConf)
+      params.require(:user).permit(:username, :email, :password, :age, :gender, :country_id, :city_id, :isAdmin, :isConf , :avatar)
     end
 end
