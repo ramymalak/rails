@@ -44,12 +44,17 @@
 		<% end %>
 
 		<br>
-		<%  if(current_user and session[:user_isAdmin] !=true and @group.user_id != session[:user_id] and @flag==0 ) %>
-			<%= form_for :attendee ,url: attendees_path do |f| %>
-			  <%=  f.hidden_field :user_id, :value => session[:user_id] %>
-			  <%= f.hidden_field :event_id, :value => @event.id %> 
-			  <%= f.submit "Attende Event" ,:class=>"btn btn-info" %>
-			 <% end %>
+		<%  if(current_user and session[:user_isAdmin] !=true and @group.user_id != session[:user_id] ) %>
+		   <%if @flag==0 %>
+					<%= form_for :attendee ,url: attendees_path do |f| %>
+					  <%=  f.hidden_field :user_id, :value => session[:user_id] %>
+					  <%= f.hidden_field :event_id, :value => @event.id %> 
+					  <%= f.submit "Attende Event" ,:class=>"btn btn-info" %>
+					 <% end %>
+			<%else%>
+			      <%= link_to 'Unattende Event', attendee_path(@attendee),
+						      method: :delete ,:class=> 'btn btn-info'%></div>
+			<%end%>		 
 		<% end %>
 		</div>	
 
@@ -66,7 +71,7 @@
 					<%end%>
 				    <font size=3><%= comment.body %></font>
 				  
-					<%  if(comment.user_id==session[:user_id]) %>
+					<%  if(comment.user_id==session[:user_id]) or session[:user_isAdmin]==true %>
 						<div style="float:right; margin-top:-50px"><%= link_to 'update',edit_group_event_comment_path(@group,@event,comment) ,:class=> 'btn btn-warning' %>
 					    <%= link_to 'Delete', group_event_comment_path(@group,@event,comment),
 						      method: :delete,

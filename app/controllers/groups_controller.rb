@@ -1,4 +1,6 @@
 class GroupsController < ApplicationController
+  before_filter :myauth
+
   before_action :set_group, only: [:show, :edit, :update, :destroy]
 
   # GET /groups
@@ -13,6 +15,8 @@ class GroupsController < ApplicationController
   # GET /groups/1
   # GET /groups/1.json
   def show
+    @interests = Interest.where(group_id: params[:id])
+    @tags=Tag.all
   end
 
   # GET /groups/new

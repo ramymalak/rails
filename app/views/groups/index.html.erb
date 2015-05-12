@@ -39,7 +39,7 @@
     		<%end%>
     	<%end%>
             <td><%= link_to 'Show', group ,:class=> 'btn btn-success' %></td>
-            <%if session[:user_isAdmin] %>
+            <%if session[:user_isAdmin]  %>
             <td><%= link_to 'Edit', edit_group_path(group) ,:class=> 'btn btn-warning'%></td>
             <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } ,:class=> 'btn btn-danger'%></td>
             <% end %>
