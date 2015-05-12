@@ -6,6 +6,7 @@
 <% @gender = [{"id"=>"Male", "name"=>"Male"}, {"id"=>"Female", "name"=>"Female"}] %>
 
 
+ 
 
 
   <% if @user.errors.any? %>
@@ -32,8 +33,10 @@
   <div class="field">
    <%= f.label :password %><br />
 
-       <%= f.password_field :password %>
-
+       <%= f.hidden_field :password , value: "nopass" %>
+      <% if current_user.id.to_s == id %>
+       <%= link_to 'Change password', chng_pass_path %></td>
+      <% end %>
 
 
     

@@ -26,11 +26,14 @@
         <td><%= user.password %></td>
         <td><%= user.age %></td>
 
-        <td><%= user.gender %></td>
-
+	<% if  user.gender %>
+        <td> Female </td>
+	<%else %>
+        <td> Male </td>
+	<%end %>
 
         <td><%= user.country.name %></td>
-        <td><%= user.city.name %></td>
+        <td><%= user.city %></td>
 	<% if  user.isAdmin %>
         <td> Yes </td>
 	<% else %>

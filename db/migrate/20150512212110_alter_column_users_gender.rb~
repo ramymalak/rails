@@ -1,0 +1,4 @@
+class AlterColumnUsersGender < ActiveRecord::Migration
+  def change
+  end
+end

@@ -1,0 +1,107 @@
+
+
+
+			Date:<input class="date"  id="eventdate" type="date"  name="startDate" width="30px" > 
+			 <button type="button" class='btn'  onclick='pickDate()'   >Search</button> 
+			 <div id="content"></div>
+
+
+
+
+<script type="text/javascript">
+
+
+
+
+
+function getXMLHttpRequest(){
+  if (window.XMLHttpRequest){
+    var request=new XMLHttpRequest();
+  }
+  else{
+    var request = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  return  request;
+}
+
+
+
+function sendAJAX(date){
+
+
+var ajaxRequest = getXMLHttpRequest();
+      ajaxRequest.open("POST","http://localhost:3000/getevents.json?date="+date,true);
+       ajaxRequest.onreadystatechange=function(){
+        if (ajaxRequest.readyState==4 && ajaxRequest.status==200){
+        response  = JSON.parse(ajaxRequest.responseText);       
+        console.log(response['data']);
+        response = response['data'];
+        var contentDiv = document.getElementById("content");
+
+        contentDiv.innerHTML='';
+        contentDiv.innerHTML="<table border='1'> <tbody class='tbBdy'> <tr bgcolor='#9acd32'><th >Event date</th><th >Event group</th><th >Name</th><th >Place</th></tbody></table>";
+
+        var tbBdyElm = document.getElementsByClassName("tbBdy");
+        var tbBdy = tbBdyElm[tbBdyElm.length - 1 ];
+        var tr;   
+        for (i=0 ; i<response.length ; i++)
+        { 
+              tr= document.createElement("tr");
+
+
+               response[i]['date'] = response[i]['date'].replace("T", " "); 
+               response[i]['date'] = response[i]['date'].replace("Z", " "); 
+
+              
+              //button id will be the username
+              tr.innerHTML+="<td>"+response[i]['date']+"</td><td>"+response[i]['n']+"</td><td>"+"<a href='http://localhost:3000/groups/"+response[i]['group_id']+"/events/"+response[i]['id']+"' >"+response[i]['name']+"</a></td>"+"<td>"+response[i]['place']+"</td>" ; 
+              //tr.innerHTML+="<td> "+response[i][1]+"</td>" ; 
+              
+              tbBdy.appendChild(tr);
+        }
+      }
+    }
+
+
+ajaxRequest.send();
+
+
+}
+
+
+
+
+     //  document.getElementById('eventdate').onchange(function () { 
+    function  pickDate() { 
+
+    date = parseDates (  document.getElementById('eventdate').value ) ;
+    sendAJAX(date);
+
+   };
+
+
+
+
+function parseDates(date){
+
+
+    if (date=="" || date == "mm/dd/yyyy")  
+      return false;
+  
+
+    //rearrange date format to match MySQL datetime format
+    var stDate = date +  " 00:00:00";
+    return stDate;  
+}
+
+
+
+
+
+
+
+
+</script>
+
+
+

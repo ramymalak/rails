@@ -25,7 +25,6 @@ attr_accessor :password
 
 
 
-
 def self.authenticate(email, password)
     user = find_by_email(email)
     if user && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
@@ -55,4 +54,6 @@ def self.authenticate(email, password)
     end
   end
 
+
+ 
 end
