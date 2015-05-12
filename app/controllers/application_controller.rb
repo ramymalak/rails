@@ -6,6 +6,16 @@ class ApplicationController < ActionController::Base
 
 helper_method :current_user
 
+
+def myauth
+		if current_user != nil
+		      #super
+		else
+		      redirect_to log_in_path, :notice => 'if you want to add a notice'
+
+		end
+end
+
 private
 
 def current_user
@@ -13,3 +23,5 @@ def current_user
 end
 
 end
+
+

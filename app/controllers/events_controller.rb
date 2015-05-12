@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  before_filter :myauth
   before_action :set_event, only: [:show, :edit, :update, :destroy]
   skip_before_filter :verify_authenticity_token, :only => [:getevents]
 

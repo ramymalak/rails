@@ -2,26 +2,50 @@
 
 <p>
   <h3 style='color:#8A6D3B;'><strong>Name:</strong></h3>
-  &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <h4><%= @group.name %></h4>
+   <h4><%= @group.name %></h4>
 </p>
 
 <p>
 
+  <!-- <h3 style='color:#8A6D3B;'><strong>Country:</strong></h3>
+   <h4><%= @group.country.name %></h4>
+</p>
+
+<p>
+  <h3 style='color:#8A6D3B;'><strong>City:</strong></h3>
+ <h4><%= @group.city.name %></h4> -->
+
   <h3 style='color:#8A6D3B;'><strong>HomeTown:</strong></h3>
   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <h4><%= @group.hometown %></h4>
+
 </p>
 
 <p>
   <h3 style='color:#8A6D3B;'><strong>Description:</strong></h3>
-  &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <h4><%= @group.description %></h4>
+   <h4><%= @group.description %></h4>
 </p>
 
 <p>
   <h3 style='color:#8A6D3B;'><strong>User:</strong></h3>
-  &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <h4><%= @group.user.username %></h4>
+  <h4><%= @group.user.username %></h4>
 </p>
+
+<p>
+  <h3 style='color:#8A6D3B;'><strong>Tags: </strong></h3>
+  <% @interests.each do |interest| %>
+  <% @tags.each do |tag| %>
+  <% if tag.id==interest.tag_id%>
+      <h4><%= tag.name %></h4>
+  <%end%>
+  <%end%>
+  <%end%>
+</p>
+
 <div style="float:right;">
+<%  if(session[:user_isAdmin]==true or @group.user_id == session[:user_id] ) %>
 <%= link_to 'Edit', edit_group_path(@group) , :class=> 'btn btn-warning'%> |
+<%= link_to 'Destroy', @group, method: :delete, data: { confirm: 'Are you sure?' } ,:class=> 'btn btn-danger'%> | 
+<%end%>
 <%= link_to 'Back', groups_path , :class=> 'btn btn-success' %>
 </div>
 </div>
