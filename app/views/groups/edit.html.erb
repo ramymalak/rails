@@ -1,12 +1,53 @@
+
 <div class="panel col-sm-6 col-sm-offset-3 ">
 <h1 style='color:#8A6D3B;' >Edit Group</h1>
 </div>
-
+<strong>If the autocomplete does not work. please reload the page</strong><br/>
+Search to change Your HomeTown
+<%= form_tag data_search_path, method:'get',:id=> 'getplaceform',remote: true do %>
+    <%= text_field_tag :search, '' , size:25,:autocomplete=> :off %>
+    <%= submit_tag 'Search', :id=> 'search_key',:hidden=>'true' %>
+<% end %>
 <%= render 'form' %>
-
 
 
 <div class="panel col-sm-6 col-sm-offset-4 ">
 
-<h4 style='color:#8A6D3B;' ><%= link_to 'Show', @group %> | <%= link_to 'Back', groups_path %></h4>
+  <h4 style='color:#8A6D3B;' ><%= link_to 'Show', @group %> | <%= link_to 'Back', groups_path %></h4>
 </div>
+
+<script>
+//  $('#usercont').remove();
+
+window.onload = function () {
+    $('#search').autocomplete({select:function(event,ui){
+        //alert(ui.item.value);
+        //console.log(ui.item.value);
+        //console.log($('#loc').text());
+        $('#hometown').val(ui.item.value);
+        $('#long').val('non');
+        $('#lat').val('non');
+        //$('#search').reset();
+
+        //$.ajax({
+        //    type:'GET',
+        //    url: 'search',
+        //    dataType: 'script',
+        //    data:{
+        //        search:ui.item.value
+        //    }
+        //
+        //
+        //});
+    }});
+}
+
+
+
+
+
+
+        //do the desired process with the coordinates
+        //alert('the current latitude' + lat + ', the current longitude is' + lon );
+
+</script>

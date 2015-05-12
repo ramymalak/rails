@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
 
 
+  get 'data/enter'
+
+  get 'data/search'
+  get 'data/getdata'
+
+
+
 get "log_out" => "users#logout", :as => "log_out"
 get "log_in" => "users#login", :as => "log_in"
 get "sign_up" => "users#new", :as => "sign_up"
@@ -19,6 +26,7 @@ root :to => "users#login"
   resources :users
   resources :attendees
 
+
 resources :groups do
 		resources :events do
   			resources :comments
@@ -29,7 +37,7 @@ resources :groups do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  #  root 'welcome#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

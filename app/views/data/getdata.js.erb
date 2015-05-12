@@ -1,0 +1,28 @@
+$(function() {
+
+    var mygroups = <%= @thegroups.to_json.html_safe %>
+            $('#allgroups').html(' ');
+    for(var i=0;i<mygroups.length;i++){
+
+        $('#allgroups').html($('#allgroups').html()+'id : '+mygroups[i].id+'<br/>'+'Group name : '+mygroups[i].name+'<br/>'+'Group Hometown : '+mygroups[i].hometown+'<br/>'+'Group Description : '+mygroups[i].description+'<br/>');
+
+//        maindiv=document.getElementById('allgroups');
+//        subdiv=document.createElement('div');
+//        subdiv.setAttribute('id',mygroups[i].id);
+//        namediv=document.createElement('div');
+//        namediv.innerHTML=mygroups[i].name;
+//        descdiv=document.createElement('div');
+//        descdiv.innerHTML=mygroups[i].description;
+//        homediv=document.createElement('div');
+//        homediv.innerHTML=mygroups[i].hometown;
+//        subdiv.append(namediv);
+//        subdiv.append(descdiv);
+//        subdiv.append(homediv);
+//        maindiv.append(subdiv);
+
+
+    }
+   // $('#allgroups').html(mygroups[1].id);
+//    console.log('okay');
+
+});
