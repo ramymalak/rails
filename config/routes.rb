@@ -1,16 +1,36 @@
 Rails.application.routes.draw do
 
+
   get 'data/enter'
 
   get 'data/search'
   get 'data/getdata'
 
+
+
+get "log_out" => "users#logout", :as => "log_out"
+get "log_in" => "users#login", :as => "log_in"
+get "sign_up" => "users#new", :as => "sign_up"
+get 'confirmation/:key' => 'users#confirmation' ,:as => "confirmation"
+post 'confirmation_pro' => 'users#confirmation_pro'
+
+get '/users/chng_pass' => 'users#chngpass' ,:as => "chng_pass"
+post '/users/chng_pass' => 'users#chngpass_pro' ,:as => "chng_pass_pro"
+
+
+post "auth" => "users#auth", :as => "auth"
+
+root :to => "users#login"
+
+
   resources :users
-  resources :fields
+  resources :attendees
+
 
 resources :groups do
 		resources :events do
-			resources :comments
+  			resources :comments
+        resources :photos
 		end
 	end
   # The priority is based upon order of creation: first created -> highest priority.

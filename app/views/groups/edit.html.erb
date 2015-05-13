@@ -1,4 +1,7 @@
-<h1>Editing Group</h1>
+
+<div class="panel col-sm-6 col-sm-offset-3 ">
+<h1 style='color:#8A6D3B;' >Edit Group</h1>
+</div>
 <strong>If the autocomplete does not work. please reload the page</strong><br/>
 Search to change Your HomeTown
 <%= form_tag data_search_path, method:'get',:id=> 'getplaceform',remote: true do %>
@@ -7,8 +10,12 @@ Search to change Your HomeTown
 <% end %>
 <%= render 'form' %>
 
-<%= link_to 'Show', @group %> |
-<%= link_to 'Back', groups_path %>
+
+<div class="panel col-sm-6 col-sm-offset-4 ">
+
+  <h4 style='color:#8A6D3B;' ><%= link_to 'Show', @group %> | <%= link_to 'Back', groups_path %></h4>
+</div>
+
 <script>
 //  $('#usercont').remove();
 

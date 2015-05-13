@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150506163315) do
+ActiveRecord::Schema.define(version: 20150510202658) do
+
+  create_table "attendees", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.integer  "event_id",   limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "attendees", ["event_id"], name: "index_attendees_on_event_id", using: :btree
+  add_index "attendees", ["user_id"], name: "index_attendees_on_user_id", using: :btree
 
   create_table "cities", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -71,6 +81,28 @@ ActiveRecord::Schema.define(version: 20150506163315) do
   add_index "groups", ["country_id"], name: "country_id_2", using: :btree
   add_index "groups", ["user_id"], name: "index_groups_on_user_id", using: :btree
 
+  create_table "interests", force: :cascade do |t|
+    t.integer  "group_id",   limit: 4
+    t.integer  "tag_id",     limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "interests", ["group_id"], name: "index_interests_on_group_id", using: :btree
+  add_index "interests", ["tag_id"], name: "index_interests_on_tag_id", using: :btree
+
+  create_table "photos", force: :cascade do |t|
+    t.integer  "event_id",            limit: 4
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.string   "avatar_file_name",    limit: 255
+    t.string   "avatar_content_type", limit: 255
+    t.integer  "avatar_file_size",    limit: 4
+    t.datetime "avatar_updated_at"
+  end
+
+  add_index "photos", ["event_id"], name: "index_photos_on_event_id", using: :btree
+
   create_table "tags", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
@@ -78,22 +110,29 @@ ActiveRecord::Schema.define(version: 20150506163315) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "username",   limit: 255
-    t.string   "email",      limit: 255
-    t.string   "password",   limit: 255
-    t.integer  "age",        limit: 4
-    t.boolean  "gender",     limit: 1
-    t.integer  "country_id", limit: 4
-    t.integer  "city_id",    limit: 4
-    t.boolean  "isAdmin",    limit: 1
-    t.boolean  "isConf",     limit: 1
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "username",            limit: 255
+    t.string   "email",               limit: 255
+    t.integer  "age",                 limit: 4
+    t.boolean  "gender",              limit: 1
+    t.integer  "country_id",          limit: 4
+    t.integer  "city_id",             limit: 4
+    t.boolean  "isAdmin",             limit: 1
+    t.boolean  "isConf",              limit: 1
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.string   "password_hash",       limit: 255
+    t.string   "password_salt",       limit: 255
+    t.string   "avatar_file_name",    limit: 255
+    t.string   "avatar_content_type", limit: 255
+    t.integer  "avatar_file_size",    limit: 4
+    t.datetime "avatar_updated_at"
   end
 
   add_index "users", ["city_id"], name: "index_users_on_city_id", using: :btree
   add_index "users", ["country_id"], name: "index_users_on_country_id", using: :btree
 
+  add_foreign_key "attendees", "events"
+  add_foreign_key "attendees", "users"
   add_foreign_key "cities", "countries"
   add_foreign_key "comments", "events"
   add_foreign_key "comments", "users"
@@ -101,6 +140,9 @@ ActiveRecord::Schema.define(version: 20150506163315) do
   add_foreign_key "groups", "cities"
   add_foreign_key "groups", "countries"
   add_foreign_key "groups", "users"
+  add_foreign_key "interests", "groups"
+  add_foreign_key "interests", "tags"
+  add_foreign_key "photos", "events"
   add_foreign_key "users", "cities"
   add_foreign_key "users", "countries"
 end

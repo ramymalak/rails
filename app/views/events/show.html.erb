@@ -1,29 +1,97 @@
-<p id="notice"><%= notice %></p>
+<div class="panel panel-default panel-body col-sm-7 col-sm-offset-2">
+		<table>
+		  <tr>
+		    <% @photos.each do |photo| %>
+		        <td><%= image_tag photo.avatar.url(:thumb) %></td>
+		    <% end %>
+		   </tr>  
+		</table><br><br>
 
-<p>
-  <strong>Name:</strong>
-  <%= @event.name %>
-</p>
+		<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Place:</strong>
-  <%= @event.place %>
-</p>
+		<p>
+		  <h3  ><strong>Name :  </strong><%= @event.name %></h3>
+		</p>
 
-<p>
-  <strong>Group:</strong>
-  <%= @event.group %>
-</p>
+		<p>
+		  <h3><strong>Place :  </strong><%= @event.place %></h3>
+		</p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @event.description %>
-</p>
+		<p>
+		  <h3><strong>Group :  </strong><%= @group.name %></h3>
+		</p>
 
-<p>
-  <strong>Date:</strong>
-  <%= @event.date %>
-</p>
+		<p>
+		  <h3  ><strong>Description:</strong><%= @event.description %></h3  >
+		</p>
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
+		<p>
+		  <h3  ><strong>Date :  </strong>
+		  <%= @event.date %></h3  >
+		</p><br>
+		<%  if(session[:user_isAdmin]==true or @group.user_id == session[:user_id] ) %>
+				  <%= form_for :photo ,url: group_event_photos_path(@group,@event) do |f| %>
+					  <%= f.file_field :avatar %>
+					  <%= f.submit :class=>"btn btn-info btn-xs"%>
+					  <%= f.hidden_field :event_id, :value => @event.id %> 
+				  <% end %>
+				 <br>
+
+				 <div class='col-sm-offset-9'>
+					<%= link_to 'Edit', edit_group_event_path(@group,@event) ,:class=> 'btn btn-success ' %>
+					<%= link_to 'Delete', group_event_path(@group,@event), method: :delete, data: { confirm: 'Are you sure?' } ,:class=> 'btn btn-danger'%> 
+				</div>
+		<% end %>
+
+		<br>
+		<%  if(current_user and session[:user_isAdmin] !=true and @group.user_id != session[:user_id] and @flag==0 ) %>
+			<%= form_for :attendee ,url: attendees_path do |f| %>
+			  <%=  f.hidden_field :user_id, :value => session[:user_id] %>
+			  <%= f.hidden_field :event_id, :value => @event.id %> 
+			  <%= f.submit "Attende Event" ,:class=>"btn btn-info" %>
+			 <% end %>
+		<% end %>
+		</div>	
+
+
+
+		<div class="panel panel-default panel-body col-sm-7 col-sm-offset-2">
+		 <h1 style='color:#8A6D3B;' >Comments :</h1>
+		<% @comments.each do |comment| %>
+     		<p style="border:2px solid #8A6D3B;padding:10px;margin-bottom:10px;">
+					<% @users.each do |user| %>
+						<%  if(comment.user_id==user.id) %>
+					           <strong style='color:#8A6D3B;'><font size=4><%= (user.username)+" : "%></font></strong>
+						<%end%>
+					<%end%>
+				    <font size=3><%= comment.body %></font>
+				  
+					<%  if(comment.user_id==session[:user_id]) %>
+						<div style="float:right; margin-top:-50px"><%= link_to 'update',edit_group_event_comment_path(@group,@event,comment) ,:class=> 'btn btn-warning' %>
+					    <%= link_to 'Delete', group_event_comment_path(@group,@event,comment),
+						      method: :delete,
+						      data: { confirm: 'Are you sure?' } ,:class=> 'btn btn-danger'%></div>
+
+						
+					 <% end %>
+			</p>
+					 		
+		 <% end %>
+         
+
+		<br>
+		<% if session[:user_id] %>
+			<%= form_for :comment ,url: group_event_comments_path(@group,@event) do |f| %>
+			  <div class="field ">
+			    <h3><%= f.label :Comment  %></h3><br>
+			    <%= f.text_area :body ,:class=> "form-control" %>
+			  		 
+			    <%=  f.hidden_field :user_id, :value => session[:user_id] %>
+			    <%= f.hidden_field :event_id, :value => @event.id %> <br>
+			
+			    <div style="float:right;"><%= f.submit :class=>"btn btn-info"%></div>
+			  </div>
+			<% end %>
+		<% end %>
+
+</div>

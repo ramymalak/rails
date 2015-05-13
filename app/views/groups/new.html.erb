@@ -1,3 +1,4 @@
+
 <h1>New Group</h1>
 Search to change Your HomeTown
 <%= form_tag data_search_path, method:'get',:id=> 'getplaceform',remote: true do %>
@@ -111,3 +112,70 @@ Search to change Your HomeTown
         timeout: 15000
     };
 </script>
+=======
+<!--<script type="text/javascript">-->
+//var x =document.getElementById("lool");
+//function myFunction(btn_id) {
+//    document.getElementById(btn_id).remove();
+//    document.getElementById("lool").value+=":"+btn_id;
+//
+//}
+//
+<!--</script>-->
+<!--<% @countries = Country.all %>-->
+<!--<% @cities = City.all %>-->
+<!--<div class="panel col-sm-6 col-sm-offset-3 ">-->
+<!--<h1 style='color:#8A6D3B;' >New Group</h1>-->
+<!--</div>-->
+<!--<div class="container">-->
+    <!--<div class="panel panel-warning col-sm-6 col-sm-offset-3 ">-->
+
+
+      <!--<%= form_for(@group) do |f| %>-->
+        <!--<% if @group.errors.any? %>-->
+          <!--<div id="error_explanation">-->
+            <!--<h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>-->
+
+            <!--<ul>-->
+            <!--<% @group.errors.full_messages.each do |message| %>-->
+              <!--<li><%= message %></li>-->
+            <!--<% end %>-->
+            <!--</ul>-->
+          <!--</div>-->
+        <!--<% end %>-->
+
+        <!--<div class="field">-->
+          <!--<h5><%= f.label :name %></h5>-->
+          <!--<%= f.text_field :name ,:class=> "form-control" %>-->
+        <!--</div>-->
+        <!--<div class="field">-->
+          <!--<h5><%= f.label :country_id %></h5>-->
+          <!--<%= f.collection_select :country_id, @countries.order(:name),:id,:name, include_blank: true %>-->
+        <!--</div>-->
+        <!--<div class="field">-->
+          <!--<h5><%= f.label :city_id %></h5>-->
+         <!--<%= f.collection_select :city_id, @cities.order(:name),:id,:name, include_blank: true %>-->
+        <!--</div>-->
+        <!--<div class="field">-->
+          <!--<h5><%= f.label :description %></h5>-->
+          <!--<%= f.text_area :description ,:class=> "form-control" %>-->
+        <!--</div>-->
+
+         <%=  f.hidden_field :user_id, :value => session[:user_id] %><br>
+         <%=  f.hidden_field :lol , :value => "" , :id => "lool" %><br>
+         <!--<% @tags.each do |tag| %>-->
+           <!--<button id="<%= tag.id%>" onclick="myFunction(this.id)" class="btn btn-warning"  ><%= tag.name%></button>-->
+         <!--<%end%>-->
+         <!--<br><br>-->
+        <!--<div class="actions">-->
+          <!--<%= f.submit "Save" ,:class=> 'col-sm-offset-5 btn btn-success btn-lg' %>-->
+        <!--</div>-->
+      <!--<% end %>-->
+
+  <!--</div>-->
+<!--</div>-->
+<!--<div class="panel col-sm-6 col-sm-offset-4 ">-->
+
+<!--<h4 style='color:#8A6D3B;' ><%= link_to 'Back', groups_path %></h4>-->
+<!--</div>-->
+

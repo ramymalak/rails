@@ -22,18 +22,25 @@
 
 <p>
   <strong>Gender:</strong>
-  <%= @user.gender %>
+    <% if  @user.gender %>
+      Female
+    <% else %>
+      Male
+    <% end %>
 </p>
 
 <p>
   <strong>Country:</strong>
-  <%= @user.country %>
+  <%= @user.country.name %>
 </p>
 
 <p>
   <strong>City:</strong>
-  <%= @user.city %>
+  <%= @user.city.name %>
 </p>
+
+ <% if current_user && current_user.isAdmin %>
+
 
 <p>
   <strong>Isadmin:</strong>
@@ -44,6 +51,15 @@
   <strong>Isconf:</strong>
   <%= @user.isConf %>
 </p>
+
+<% end %>
+
+<p>
+  <strong>Profile picture:</strong>
+<%= image_tag @user.avatar.url(:thumb) %>
+</p>
+
+
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

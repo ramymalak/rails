@@ -5,6 +5,7 @@ class GroupsController < ApplicationController
   # GET /groups.json
   def index
     @groups = Group.all
+    @users = User.all
   end
 
   # GET /groups/1
@@ -14,6 +15,7 @@ class GroupsController < ApplicationController
 
   # GET /groups/new
   def new
+    @tags = Tag.all
     @group = Group.new
   end
 
@@ -26,10 +28,15 @@ class GroupsController < ApplicationController
   def create
     newparam= checker()
     @group = Group.new(newparam)
-
+    @data=(params['group']['lol']).split(':')
     respond_to do |format|
       if @group.save
-        format.html { redirect_to @group, notice: 'Group was successfully created.' }
+        @data.each do |x|
+          if (x!="")
+            @i = Interest.create(group_id: @group.id, tag_id: x)
+          end
+        end  
+        format.html { redirect_to @group, notice: params['group']['lol']}
         format.json { render :show, status: :created, location: @group }
       else
         format.html { render :new }
@@ -56,7 +63,30 @@ class GroupsController < ApplicationController
   # DELETE /groups/1
   # DELETE /groups/1.json
   def destroy
-    @group.destroy
+    
+    @events = Event.where(group_id: params[:id])
+    @events.each do |event|
+         
+        @photos = Photo.where(event_id: event.id)
+        @photos.each do |photo|
+             photo.destroy
+         end  
+        @attendees = Attendee.where(event_id: event.id)  
+        @attendees.each do |attendee|
+             attendee.destroy
+         end  
+        @comments = Comment.where(event_id: event.id)  
+        @comments.each do |comment|
+             comment.destroy
+        end
+
+         event.destroy
+     end
+     @interests = Interest.where(group_id: params[:id])  
+     @interests.each do |interest|
+          interest.destroy
+     end
+     @group.destroy
     respond_to do |format|
       format.html { redirect_to groups_url, notice: 'Group was successfully destroyed.' }
       format.json { head :no_content }
