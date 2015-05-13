@@ -4,8 +4,8 @@ class User < ActiveRecord::Base
   has_many :events , through: :attendees
 
 
-  validates_presence_of :username , :email, :password ,:age , :city , :country, :gender 
-  validates_uniqueness_of :email
+  # validates_presence_of :username , :email, :password , :country, :gender
+  # validates_uniqueness_of :email
 
 
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
 
 
 
-  validates_presence_of :username , :email, :password ,:age , :city , :country, :gender 
+  validates_presence_of :username , :email, :password ,:age
   validates_uniqueness_of :email
   validates :password, length: { minimum: 6 }
 

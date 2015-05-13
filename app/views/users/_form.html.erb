@@ -1,8 +1,5 @@
 <%= form_for(@user) do |f| %>
 
-
-<% @countries = Country.all %>
-<% @cities = City.all %>
 <% @gender = [{"id"=>"0", "name"=>"Male"}, {"id"=>"1", "name"=>"Female"}] %>
 
 <%if  ( action_name == "edit" ) %>
@@ -40,9 +37,11 @@
    <%= f.label :password %><br />
    <% if  ( action_name == "edit" )    %>
        <%= f.hidden_field :password , value: "nopass" %>
+        <% if session[:user_id] %>
       <% if current_user.id.to_s == id %>
        <%= link_to 'Change password', chng_pass_path %></td>
       <% end %>
+        <% end %>
    <% else %>
        <%= f.password_field :password %>
    <% end %>
@@ -68,18 +67,6 @@
 <%= f.select :gender, options_for_select(@gender.collect {|p| [ p['name'], p['id'] ] } , @user.gender )%>
 
   </div>
-  <div class="field">
-    <%= f.label :country_id %><br>
-    <%= f.collection_select :country_id, @countries.order(:name),:id,:name, include_blank: true %>
-
-  </div>
-  <div class="field">
-    <%= f.label :city_id %><br>
-    <%= f.collection_select :city_id, @cities.order(:name),:id,:name, include_blank: true %>
-
-  </div>
-
-
 
 
 

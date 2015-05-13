@@ -172,6 +172,8 @@ end
   def update
     respond_to do |format|
       if @user.update(user_params)
+        session[:user_username] = user_params[:username]
+        session[:user_isAdmin] = user_params[:isAdmin]
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -199,6 +201,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:username, :email, :password, :age, :gender, :country_id, :city_id, :isAdmin, :isConf , :avatar)
+      params.require(:user).permit(:username, :email, :password, :age, :gender, :isAdmin, :isConf , :avatar)
     end
 end

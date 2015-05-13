@@ -2,9 +2,19 @@ $(function() {
 
     var mygroups = <%= @thegroups.to_json.html_safe %>
             $('#allgroups').html(' ');
+    $('#allgroups').append("<div class='panel-body'><table class='table table-bordered  table-responsive table-striped '><thead><tr><th><h3 style='color:#8A6D3B;'><strong>Group ID</strong></h3></th><th><h3 style='color:#8A6D3B;'><strong>Group Name</strong></h3></th><th><h3 style='color:#8A6D3B;'><strong>Hometown</strong></h3></th><th><h3 style='color:#8A6D3B;'><strong>Description</strong></h3></th><th colspan='1'></th></tr></thead><tbody>");
+    $('#allgroups').append("</tbody></table></div>");
     for(var i=0;i<mygroups.length;i++){
 
-        $('#allgroups').html($('#allgroups').html()+'id : '+mygroups[i].id+'<br/>'+'Group name : '+mygroups[i].name+'<br/>'+'Group Hometown : '+mygroups[i].hometown+'<br/>'+'Group Description : '+mygroups[i].description+'<br/>');
+        $('tbody').append("<tr id="+mygroups[i].id+">"+"<td>"+mygroups[i].id+"</td>"+"<td>"+mygroups[i].name+"</td><td>"+mygroups[i].hometown+"</td><td>"+mygroups[i].description+"</td><td><a class='btn btn-success' href=/groups/"+mygroups[i].id+'>Show</a>'+"</td></tr>");
+
+//        subdiv=$('<div></div>').attr('id',mygroups[i].id);
+//        subdiv.appent('<div>'+mygroups[i].id+'</div>');
+//        subdiv.appent('<div>'+mygroups[i].name+'</div>');
+//        subdiv.appent('<div>'+mygroups[i].hometown+'</div>');
+//        subdiv.appent('<div>'+mygroups[i].description+'</div>');
+//        $('#allgroups').append(subdiv);
+//        $('#allgroups').html($('#allgroups').html()+$("<div>"+'id : '+mygroups[i].id+"</div>")+'<br/>'+'Group name : '+mygroups[i].name+'<br/>'+'Group Hometown : '+mygroups[i].hometown+'<br/>'+'Group Description : '+mygroups[i].description+'<br/>');
 
 //        maindiv=document.getElementById('allgroups');
 //        subdiv=document.createElement('div');
@@ -22,6 +32,8 @@ $(function() {
 
 
     }
+
+//    $('#allgroups').append('<div>'+mygroups[0].id+'</div>');
    // $('#allgroups').html(mygroups[1].id);
 //    console.log('okay');
 

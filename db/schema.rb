@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150510202658) do
+ActiveRecord::Schema.define(version: 20150513042719) do
 
   create_table "attendees", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
@@ -117,10 +117,10 @@ ActiveRecord::Schema.define(version: 20150510202658) do
     t.boolean  "gender",              limit: 1
     t.integer  "country_id",          limit: 4
     t.integer  "city_id",             limit: 4
-    t.boolean  "isAdmin",             limit: 1
-    t.boolean  "isConf",              limit: 1
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.boolean  "isAdmin",             limit: 1,   default: false
+    t.boolean  "isConf",              limit: 1,   default: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
     t.string   "password_hash",       limit: 255
     t.string   "password_salt",       limit: 255
     t.string   "avatar_file_name",    limit: 255
@@ -129,8 +129,11 @@ ActiveRecord::Schema.define(version: 20150510202658) do
     t.datetime "avatar_updated_at"
   end
 
+  add_index "users", ["city_id"], name: "city_id", using: :btree
   add_index "users", ["city_id"], name: "index_users_on_city_id", using: :btree
-  add_index "users", ["country_id"], name: "index_users_on_country_id", using: :btree
+  add_index "users", ["country_id"], name: "country_id", using: :btree
+  add_index "users", ["country_id"], name: "country_id_2", using: :btree
+  add_index "users", ["country_id"], name: "country_id_3", using: :btree
 
   add_foreign_key "attendees", "events"
   add_foreign_key "attendees", "users"
@@ -144,6 +147,6 @@ ActiveRecord::Schema.define(version: 20150510202658) do
   add_foreign_key "interests", "groups"
   add_foreign_key "interests", "tags"
   add_foreign_key "photos", "events"
-  add_foreign_key "users", "cities"
-  add_foreign_key "users", "countries"
+  add_foreign_key "users", "cities", name: "users_ibfk_2", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "users", "countries", name: "users_ibfk_1", on_update: :cascade, on_delete: :cascade
 end

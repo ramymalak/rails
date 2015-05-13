@@ -1,4 +1,5 @@
-<div id="loc" onclick="showinput()"></div>
+<input style="float:left;margin-left: 5px;margin-right: 5px;" type="text"/>
+<div style="float:left;margin-left: 5px;margin-right: 5px;" id="loc" onclick="showinput()"></div>
 <%= form_tag data_getdata_path, method:'get',remote: true do %>
 
     <%= text_field_tag :lang,'1',:id=> 'lang',:hidden=>'true'%>
@@ -13,7 +14,6 @@
 <%= text_field_tag :search, '' , size:25,:autocomplete=> :off %>
 <%= submit_tag 'Search', :id=> 'search_key',:hidden=>'true' %>
 <% end %>
-<%= @try %>
 <div id="allgroups">
 
 
@@ -46,7 +46,8 @@
     }})
 
     function showinput(){
-        $('#getplaceform').toggleClass('notshownydefault')
+        $('#getplaceform').toggleClass('notshownydefault');
+        $('#search').css('margin-left','165px');
 
     }
 
