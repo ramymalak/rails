@@ -13,3 +13,11 @@
  *= require_tree .
  *= require_self
  */
+.notshownydefault{
+    display:none;
+}
+.ui-autocomplete {
+    height: 100px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}

@@ -1,0 +1,8 @@
+$(function() {
+    var availableTags = <%= raw @auto %>;
+    $( "#search" ).autocomplete({
+        source: availableTags
+    });
+
+});
+
