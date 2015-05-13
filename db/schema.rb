@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20150510202658) do
   end
 
   add_index "groups", ["city_id"], name: "city_id", using: :btree
+  add_index "groups", ["city_id"], name: "city_id_2", using: :btree
   add_index "groups", ["country_id"], name: "country_id", using: :btree
   add_index "groups", ["country_id"], name: "country_id_2", using: :btree
   add_index "groups", ["user_id"], name: "index_groups_on_user_id", using: :btree
