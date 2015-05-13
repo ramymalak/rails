@@ -18,6 +18,8 @@ ActiveRecord::Schema.define(version: 20150506163315) do
     t.integer  "country_id", limit: 4
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.float    "lat",        limit: 53,  null: false
+    t.float    "long",       limit: 53,  null: false
   end
 
   add_index "cities", ["country_id"], name: "index_cities_on_country_id", using: :btree
@@ -59,10 +61,14 @@ ActiveRecord::Schema.define(version: 20150506163315) do
     t.integer  "user_id",     limit: 4
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.float    "lat",         limit: 53,    null: false
+    t.float    "long",        limit: 53,    null: false
+    t.string   "hometown",    limit: 250,   null: false
   end
 
-  add_index "groups", ["city_id"], name: "index_groups_on_city_id", using: :btree
-  add_index "groups", ["country_id"], name: "index_groups_on_country_id", using: :btree
+  add_index "groups", ["city_id"], name: "city_id", using: :btree
+  add_index "groups", ["country_id"], name: "country_id", using: :btree
+  add_index "groups", ["country_id"], name: "country_id_2", using: :btree
   add_index "groups", ["user_id"], name: "index_groups_on_user_id", using: :btree
 
   create_table "tags", force: :cascade do |t|

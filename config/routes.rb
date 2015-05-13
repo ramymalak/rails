@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
 
+  get 'data/enter'
+
+  get 'data/search'
+  get 'data/getdata'
+
   resources :users
+  resources :fields
 
 resources :groups do
 		resources :events do
@@ -11,7 +17,7 @@ resources :groups do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+   root 'welcome#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

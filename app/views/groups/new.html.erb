@@ -1,5 +1,113 @@
 <h1>New Group</h1>
-
+Search to change Your HomeTown
+<%= form_tag data_search_path, method:'get',:id=> 'getplaceform',remote: true do %>
+    <%= text_field_tag :search, '' , size:25,:autocomplete=> :off %>
+    <%= submit_tag 'Search', :id=> 'search_key',:hidden=>'true' %>
+<% end %>
 <%= render 'form' %>
 
 <%= link_to 'Back', groups_path %>
+
+
+<script>
+
+    $('#search').autocomplete({select:function(event,ui){
+        //alert(ui.item.value);
+        //console.log(ui.item.value);
+        //console.log($('#loc').text());
+        $('#hometown').val(ui.item.value);
+        $('#long').val('non');
+        $('#lat').val('non');
+        $('#search').reset();
+
+        //$.ajax({
+        //    type:'GET',
+        //    url: 'search',
+        //    dataType: 'script',
+        //    data:{
+        //        search:ui.item.value
+        //    }
+        //
+        //
+        //});
+    }})
+    window.onload = function () {
+        getMyLocation();
+    }
+    function getMyLocation() {
+        geo = getGeoLocationObject()
+        if (geo) {
+            // alert('Geolocation Works!');
+            geo.getCurrentPosition(success, errorHandling, options);
+        } else {
+            alert('Geolocation isn’t working');
+        }
+    }
+    function getGeoLocationObject() {
+        try {
+            if (!!navigator.geolocation) {
+                //object exists, return it
+                return navigator.geolocation;
+            }
+            else {
+                //object doesn’t exist
+                return undefined;
+            }
+        } catch (e) {
+            //error while requesting object
+            return undefined;
+        }
+    }
+    function success(position) {
+        var lat = position.coords.latitude;
+        var lon = position.coords.longitude;
+
+//        lat=40.714224;
+//        lon=-73.961452;
+//        lat= 37.4224764;
+        //       lon = -122.0842499;
+
+        //console.log(position);
+        $.ajax({
+
+            url: "https://maps.googleapis.com/maps/api/geocode/json",
+            data: {
+                latlng:lat+','+lon
+            },
+
+            // Work with the response
+            success: function( response ) {
+                console.log( response); // server response
+                $('#hometown').val(response.results[(response.results.length)-2].formatted_address);
+                $('#long').val(lon);
+                $('#lat').val(lat);
+
+            }
+        });
+
+
+
+
+        //do the desired process with the coordinates
+        //alert('the current latitude' + lat + ', the current longitude is' + lon );
+    }
+    function errorHandling(error) {
+        switch (error.code) {
+            case error.TIMEOUT:
+                alert('Geolocation Timeout');
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert('Position Unavailable');
+                break;
+            case error.PERMISSION_DENIED:
+                alert('Permission Denied');
+                break;
+            default:
+                alert('Unknown Error : ' + error.code);
+        }
+    }
+    var options = {
+        enableHighAccuracy: true,
+        timeout: 15000
+    };
+</script>

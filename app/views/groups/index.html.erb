@@ -6,10 +6,9 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Country</th>
-      <th>City</th>
+      <th>Hometown</th>
       <th>Description</th>
-      <th>User</th>
+      <th>Group Creator</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,12 +17,11 @@
     <% @groups.each do |group| %>
       <tr>
         <td><%= group.name %></td>
-        <td><%= group.country %></td>
-        <td><%= group.city %></td>
+        <td><%= group.hometown %></td>
         <td><%= group.description %></td>
-        <td><%= group.user %></td>
+        <td><%= User.find(group.user_id).username %></td>
         <td><%= link_to 'Show', group %></td>
-        <td><%= link_to 'Edit', edit_group_path(group) %></td>
+        <td><%= link_to 'Edit', "/groups/#{group.id}/edit" %></td>
         <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

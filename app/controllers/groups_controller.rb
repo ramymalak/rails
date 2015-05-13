@@ -24,7 +24,8 @@ class GroupsController < ApplicationController
   # POST /groups
   # POST /groups.json
   def create
-    @group = Group.new(group_params)
+    newparam= checker()
+    @group = Group.new(newparam)
 
     respond_to do |format|
       if @group.save
@@ -40,8 +41,9 @@ class GroupsController < ApplicationController
   # PATCH/PUT /groups/1
   # PATCH/PUT /groups/1.json
   def update
+    newparam= checker()
     respond_to do |format|
-      if @group.update(group_params)
+      if @group.update(newparam)
         format.html { redirect_to @group, notice: 'Group was successfully updated.' }
         format.json { render :show, status: :ok, location: @group }
       else
@@ -66,9 +68,28 @@ class GroupsController < ApplicationController
     def set_group
       @group = Group.find(params[:id])
     end
-
+    def checker
+      theparam=[];
+      theparam=group_params();
+      thelong=group_params[:long]
+      thelat=group_params[:lat]
+      if(thelong=='non' || thelat=='non')
+        thecith=group_params[:hometown].split(',',2)[0];
+        thecoun=group_params[:hometown].split(',',2)[1].split(' ',2)[0];
+        theconid=Country.find_by('name = ?',thecoun).id;
+        puts City.where('name = ? and country_id = ?',thecith,theconid).inspect
+        thelat=City.where('name = ? and country_id = ?',thecith,theconid)[0].lat
+        thelong=City.where('name = ? and country_id = ?',thecith,theconid)[0].long
+        puts thelat.inspect
+        puts thelong.inspect
+        theparam[:long]=thelong;
+        theparam[:lat]=thelat;
+        puts thelong.inspect
+      end
+      return theparam
+    end
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
-      params.require(:group).permit(:name, :country_id, :city_id, :description, :user_id)
+      params.require(:group).permit(:name,:long ,:lat , :description, :user_id,:hometown)
     end
 end

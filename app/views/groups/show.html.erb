@@ -6,13 +6,8 @@
 </p>
 
 <p>
-  <strong>Country:</strong>
-  <%= @group.country %>
-</p>
-
-<p>
-  <strong>City:</strong>
-  <%= @group.city %>
+  <strong>HomeTown:</strong>
+  <%= @group.hometown %>
 </p>
 
 <p>
@@ -21,8 +16,8 @@
 </p>
 
 <p>
-  <strong>User:</strong>
-  <%= @group.user %>
+  <strong>Admin:</strong>
+  <%= User.find(@group.user_id).username %>
 </p>
 
 <%= link_to 'Edit', edit_group_path(@group) %> |
