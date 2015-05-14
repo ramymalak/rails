@@ -1,5 +1,24 @@
 class EventsController < ApplicationController
+  before_filter :myauth
   before_action :set_event, only: [:show, :edit, :update, :destroy]
+  skip_before_filter :verify_authenticity_token, :only => [:getevents]
+
+
+  def searchevents_date
+
+  end  
+    def getevents
+
+        
+        @events = Event.select("events.*, groups.name as n").joins(:group).where("date > ?", params[:date])
+
+        respond_to do |format|
+          format.json { render :json => { :data => @events}, :status => 200 }
+
+              #format.json { respond_with_bip(@events)  }
+        end
+    end
+
 
   # GET /events
   # GET /events.json

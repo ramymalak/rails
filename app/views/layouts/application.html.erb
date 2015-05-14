@@ -32,9 +32,14 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <% if current_user %>
+
          <li><a href="/data/enter">Home</a></li>
+
+                <li><%= link_to 'Users', users_path %></li>
+
         <li><%= link_to 'Groups', groups_path %></li>
-        <li><%= link_to 'Users', users_path %></li>
+
+            <li><%= link_to 'Calender search', search_dates_path %></li>
         <% else %>
           <li><%= link_to "Sign Up", sign_up_path %> </li>
           <li><%= link_to "Log In", log_in_path %></li>

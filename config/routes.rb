@@ -23,6 +23,11 @@ post "auth" => "users#auth", :as => "auth"
 root :to => "users#login"
 
 
+get 'events/search_dates' => 'events#searchevents_date' ,:as => "search_dates"
+post 'getevents' => 'events#getevents' ,:as => "getevents"
+
+
+
   resources :users
   resources :attendees
 

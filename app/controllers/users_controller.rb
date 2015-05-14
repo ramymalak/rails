@@ -1,9 +1,19 @@
 class UsersController < ApplicationController
+
   before_action :set_user, only: [:show, :edit, :update, :destroy ]
+  #before_filter :myauth
 
   # GET /users
   # GET /users.json
   def index
+
+
+    # if ( !current_user  || !current_user.isAdmin )
+    #   render :text => "You are not authorized to see this page", :layout => true
+    #
+    #   return
+    # end
+
     @users = User.all
   end
 
@@ -15,6 +25,10 @@ class UsersController < ApplicationController
 
 
 def login
+
+          if (current_user)
+            redirect_to groups_path
+          end
 
 end
 
@@ -126,9 +140,11 @@ end
       if @user.save
 
         #if a normal user is signing up, send a confirmation email
-        if (!current_user )
+        if (!current_user || !@user.isConf)
             UserNotifier.send_signup_email(@user).deliver!
-            format.html { render :confirmation_process }
+            if (!current_user)
+               format.html { render :confirmation_process } 
+            end
         end
 
 

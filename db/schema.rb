@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(version: 20150513042719) do
     t.string   "username",            limit: 255
     t.string   "email",               limit: 255
     t.integer  "age",                 limit: 4
-    t.boolean  "gender",              limit: 1
+    t.string   "gender",              limit: 255
     t.integer  "country_id",          limit: 4
     t.integer  "city_id",             limit: 4
     t.boolean  "isAdmin",             limit: 1,   default: false

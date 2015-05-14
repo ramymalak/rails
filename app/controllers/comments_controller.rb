@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  before_filter :myauth
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
   # GET /comments

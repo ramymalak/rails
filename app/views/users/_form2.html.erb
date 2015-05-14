@@ -1,0 +1,80 @@
+
+<%= form_for(@user) do |f| %>
+
+    <% @gender = [{"id"=>"0", "name"=>"Male"}, {"id"=>"1", "name"=>"Female"}] %>
+
+
+
+
+    <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+          <ul>
+            <% @user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+
+    <div class="field">
+      <%= f.label :username %><br>
+      <%= f.text_field :username %>
+    </div>
+    <div class="field">
+      <%= f.label :email %><br>
+      <%= f.text_field :email %>
+    </div>
+    <div class="field">
+      <%= f.label :password %><br />
+
+      <%= f.hidden_field :password , value: "nopass" %>
+      <% if current_user.id.to_s == id %>
+          <%= link_to 'Change password', chng_pass_path %></td>
+      <% end %>
+    </div>
+
+    <div class="field">
+      <%= f.label :age %><br>
+      <%= f.number_field :age %>
+    </div>
+    <div class="field">
+      <%= f.label :gender %><br>
+
+
+      <%= f.select :gender, options_for_select(@gender.collect {|p| [ p['name'], p['id'] ] } , @user.gender )%>
+
+    </div>
+
+
+
+    <% if current_user && current_user.isAdmin %>
+        <div class="field">
+          <%= f.label :isAdmin %><br>
+          <%= f.check_box :isAdmin %>
+        </div>
+        <div class="field">
+          <%= f.label :isConf %><br>
+          <%= f.check_box :isConf %>
+        </div>
+    <% end %>
+
+
+
+    <div class="field">
+      <%= f.label :Profile_pic %><br>
+      <%= f.file_field :avatar %>
+    </div>
+
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+
+
+
+
+<% end %>
+
