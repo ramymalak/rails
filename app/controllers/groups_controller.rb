@@ -13,6 +13,7 @@ class GroupsController < ApplicationController
   # GET /groups/1
   # GET /groups/1.json
   def show
+    @group = Group.find(params[:id]);
     @interests = Interest.where(group_id: params[:id])
     @tags=Tag.all
   end
@@ -25,12 +26,14 @@ class GroupsController < ApplicationController
 
   # GET /groups/1/edit
   def edit
+    @tags = Tag.all
   end
 
   # POST /groups
   # POST /groups.json
   def create
     newparam= checker()
+    puts newparam.inspect
     @group = Group.new(newparam)
     @data=(params['group']['lol']).split(':')
     respond_to do |format|
@@ -124,6 +127,6 @@ class GroupsController < ApplicationController
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
-      params.require(:group).permit(:name,:long ,:lat , :description, :user_id,:hometown)
+      params.require(:group).permit(:name,:long ,:lat , :description, :user_id,:hometown, :id)
     end
 end

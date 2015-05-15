@@ -22,6 +22,7 @@ class DataController < ApplicationController
   def getdata
     thelong=search_params[:lang]
     thelat=search_params[:lat]
+    tagid=search_params[:tag_ids]
     thedist=search_params[:thedistance]
     if(thelong=='non' || thelat=='non')
       thecith=search_params[:theselected].split(',',2)[0];
@@ -33,7 +34,9 @@ class DataController < ApplicationController
       puts thelat.inspect
       puts thelong.inspect
     end
-    @allgroups=Group.select("*,3956 * 2 * ASIN(SQRT( POWER(SIN((#{thelat} -abs(groups.lat)) * pi()/180 / 2),2) + COS(#{thelat} * pi()/180 ) * COS(abs(groups.lat) *  pi()/180) * POWER(SIN((#{thelong} - groups.long) *  pi()/180 / 2), 2) )) as distance").having("distance < #{thedist}").order('distance').limit(10);
+    # @allgroups=Group.select("*,3956 * 2 * ASIN(SQRT( POWER(SIN((#{thelat} -abs(groups.lat)) * pi()/180 / 2),2) + COS(#{thelat} * pi()/180 ) * COS(abs(groups.lat) *  pi()/180) * POWER(SIN((#{thelong} - groups.long) *  pi()/180 / 2), 2) )) as distance").having("distance < #{thedist}").order('distance').limit(10);
+
+    @allgroups=Interest.distinct.joins(',groups').select("groups.*,3956 * 2 * ASIN(SQRT( POWER(SIN((#{thelat} -abs(groups.lat)) * pi()/180 / 2),2) + COS(#{thelat} * pi()/180 ) * COS(abs(groups.lat) *  pi()/180) * POWER(SIN((#{thelong} - groups.long) *  pi()/180 / 2), 2) )) as distance").where('interests.tag_id' => tagid).where('groups.id=interests.group_id').having("distance < #{thedist}").order('distance').limit(100);
     @thegroups=@allgroups;
     puts @allgroups.inspect
     #render json: @allgroups
@@ -45,6 +48,6 @@ class DataController < ApplicationController
   end
   private
   def search_params
-    params.permit(:lang, :lat,:theselected,:thedistance)
+    params.permit(:lang, :lat,:theselected,:thedistance,:tag_ids)
   end
 end

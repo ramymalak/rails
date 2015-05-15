@@ -2,6 +2,7 @@ $(function() {
 
     var mygroups = <%= @thegroups.to_json.html_safe %>
             $('#allgroups').html(' ');
+    if(mygroups.length>0){
     $('#allgroups').append("<div class='panel-body'><table class='table table-bordered  table-responsive table-striped '><thead><tr><th><h3 style='color:#8A6D3B;'><strong>Group ID</strong></h3></th><th><h3 style='color:#8A6D3B;'><strong>Group Name</strong></h3></th><th><h3 style='color:#8A6D3B;'><strong>Hometown</strong></h3></th><th><h3 style='color:#8A6D3B;'><strong>Description</strong></h3></th><th colspan='1'></th></tr></thead><tbody>");
     $('#allgroups').append("</tbody></table></div>");
     for(var i=0;i<mygroups.length;i++){
@@ -32,7 +33,7 @@ $(function() {
 
 
     }
-
+    }
 //    $('#allgroups').append('<div>'+mygroups[0].id+'</div>');
    // $('#allgroups').html(mygroups[1].id);
 //    console.log('okay');

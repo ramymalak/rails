@@ -1,0 +1,59 @@
+<script type="text/javascript">
+    var x =document.getElementById("lool");
+    function myFunction(btn_id) {
+        document.getElementById(btn_id).remove();
+        document.getElementById("lool").value+=":"+btn_id;
+
+    }
+
+</script>
+<div class="container">
+  <div class="panel panel-warning col-sm-6 col-sm-offset-3 ">
+    <%= form_for(@group) do |f| %>
+        <% if @group.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
+
+              <ul>
+                <% @group.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <div class="field">
+          <%= f.label :name %><br>
+          <%= f.text_field :name %>
+        </div>
+        <div class="field">
+          <%= f.label :hometown %><br>
+          <%= f.text_field :hometown, :id=>'hometown', :readonly=>true, :size=>50 %>
+        </div>
+        <div class="field">
+          <%= f.label :description %><br>
+          <%= f.text_area :description %>
+        </div>
+        <div class="field" id="usercont">
+          <%= f.label :user_id,:hidden=>'hidden' %><br>
+          <%= f.text_field :user_id, :value=>session[:user_id],:hidden=>'hidden' %>
+        </div>
+        <div class="field">
+          <%= f.text_field :long, :id=>'long', :hidden=>'hidden' %>
+        </div>
+        <div class="field">
+          <%= f.text_field :lat, :id=>'lat', :hidden=>'hidden' %>
+        </div>
+        <%=  f.hidden_field :lol , :value => "" , :id => "lool" %><br>
+        <% @tags.each do |tag| %>
+            <button id="<%= tag.id%>" onclick="myFunction(this.id)" class="btn btn-warning"  ><%= tag.name%></button>
+        <%end%>
+        <br><br>
+        <div class="actions">
+          <%= f.submit "Save" ,:class=> 'col-sm-offset-5 btn btn-success btn-lg' %>
+        </div>
+    <% end %>
+  </div>
+</div>
+
+

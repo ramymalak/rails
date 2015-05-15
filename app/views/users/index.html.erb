@@ -25,7 +25,7 @@
         <td><%= user.username %></td>
         <td><%= user.email %></td>
         <td><%= user.age %></td>
-        <% if user.gender %>
+        <% if user.gender=='1' %>
             <td>Female</td>
             <% else %>
             <td>Male</td>
@@ -51,5 +51,6 @@
 </table>
 </div>
 <br>
-
+<% if session[:user_isAdmin] %>
 <%= link_to 'New User', new_user_path %>
+<% end %>

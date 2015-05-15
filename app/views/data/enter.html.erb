@@ -1,7 +1,15 @@
-<input style="float:left;margin-left: 5px;margin-right: 5px;" type="text"/>
-<div style="float:left;margin-left: 5px;margin-right: 5px;" id="loc" onclick="showinput()"></div>
-<%= form_tag data_getdata_path, method:'get',remote: true do %>
 
+
+
+
+
+
+
+<%= form_tag data_getdata_path, method:'get',remote: true do %>
+    <span style="float:left;margin-left: 5px;margin-right: 5px;">
+ <%= select_tag "tag_ids", options_from_collection_for_select(Tag.all,"id","name",{:selected=>[1,2]}) %>
+</span>
+    <div style="float:left;margin-left: 5px;margin-right: 5px;" id="loc" onclick="showinput()"></div>
     <%= text_field_tag :lang,'1',:id=> 'lang',:hidden=>'true'%>
     <%= text_field_tag :lat,'1',:id=> 'lat',:hidden=>'true'%>
     <%= text_field_tag :theselected,'1',:id=> 'theselected',:hidden=>'true'%>
@@ -11,7 +19,7 @@
 <% end %>
 
 <%= form_tag data_search_path, method:'get',class:'notshownydefault',:id=> 'getplaceform',remote: true do %>
-<%= text_field_tag :search, '' , size:25,:autocomplete=> :off %>
+    <%= text_field_tag :search, '' , size:25,:autocomplete=> :off %>
 <%= submit_tag 'Search', :id=> 'search_key',:hidden=>'true' %>
 <% end %>
 <div id="allgroups">
@@ -19,118 +27,130 @@
 
 </div>
 <script>
-    $('#thedistance').on('change',function(){
+
+    var ready;
+    ready = function() {
         $('#getallsearch').click();
-    });
+        $('#tag_ids').on('change', function () {
+            $('#getallsearch').click();
+        });
+        $('#thedistance').on('change', function () {
+            $('#getallsearch').click();
+        });
 
-    $('#search').autocomplete({select:function(event,ui){
-        //alert(ui.item.value);
-        //console.log(ui.item.value);
-        //console.log($('#loc').text());
-        $('#loc').text(ui.item.value);
-        $('#theselected').val($('#loc').text());
-        $('#lang').val('non');
-        $('#lat').val('non');
-        $('#getplaceform').toggleClass('notshownydefault');
-        $('#getallsearch').click();
-        //$.ajax({
-        //    type:'GET',
-        //    url: 'search',
-        //    dataType: 'script',
-        //    data:{
-        //        search:ui.item.value
-        //    }
-        //
-        //
-        //});
-    }})
-
-    function showinput(){
-        $('#getplaceform').toggleClass('notshownydefault');
-        $('#search').css('margin-left','165px');
-
-    }
-
-
-
-    window.onload = function () {
-        getMyLocation();
-    }
-    function getMyLocation() {
-        geo = getGeoLocationObject()
-        if (geo) {
-            // alert('Geolocation Works!');
-            geo.getCurrentPosition(success, errorHandling, options);
-        } else {
-            alert('Geolocation isn’t working');
-        }
-    }
-    function getGeoLocationObject() {
-        try {
-            if (!!navigator.geolocation) {
-                //object exists, return it
-                return navigator.geolocation;
+        $('#search').autocomplete({
+            select: function (event, ui) {
+                //alert(ui.item.value);
+                //console.log(ui.item.value);
+                //console.log($('#loc').text());
+                $('#loc').text(ui.item.value);
+                $('#theselected').val($('#loc').text());
+                $('#lang').val('non');
+                $('#lat').val('non');
+                $('#getplaceform').toggleClass('notshownydefault');
+                $('#getallsearch').click();
+                //$.ajax({
+                //    type:'GET',
+                //    url: 'search',
+                //    dataType: 'script',
+                //    data:{
+                //        search:ui.item.value
+                //    }
+                //
+                //
+                //});
             }
-            else {
-                //object doesn’t exist
+        })
+
+        function showinput() {
+            $('#getplaceform').toggleClass('notshownydefault');
+            $('#search').css('margin-left', '165px');
+
+        }
+
+
+        window.onload = function () {
+            getMyLocation();
+        }
+        function getMyLocation() {
+            geo = getGeoLocationObject()
+            if (geo) {
+                // alert('Geolocation Works!');
+                geo.getCurrentPosition(success, errorHandling, options);
+            } else {
+                alert('Geolocation isn’t working');
+            }
+        }
+
+        function getGeoLocationObject() {
+            try {
+                if (!!navigator.geolocation) {
+                    //object exists, return it
+                    return navigator.geolocation;
+                }
+                else {
+                    //object doesn’t exist
+                    return undefined;
+                }
+            } catch (e) {
+                //error while requesting object
                 return undefined;
             }
-        } catch (e) {
-            //error while requesting object
-            return undefined;
         }
-    }
-    function success(position) {
-        var lat = position.coords.latitude;
-        var lon = position.coords.longitude;
+
+        function success(position) {
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
 
 //        lat=40.714224;
 //        lon=-73.961452;
 //        lat= 37.4224764;
-        //       lon = -122.0842499;
+            //       lon = -122.0842499;
 
-        //console.log(position);
-        $.ajax({
+            //console.log(position);
+            $.ajax({
 
-            url: "https://maps.googleapis.com/maps/api/geocode/json",
-            data: {
-                latlng:lat+','+lon
-            },
+                url: "https://maps.googleapis.com/maps/api/geocode/json",
+                data: {
+                    latlng: lat + ',' + lon
+                },
 
-            // Work with the response
-            success: function( response ) {
-                console.log( response); // server response
-                $('#loc').text(response.results[(response.results.length)-2].formatted_address);
-                $('#lang').val(lon);
-                $('#lat').val(lat);
-                $('#theselected').val($('#loc').text());
-            }
-        });
-
-
+                // Work with the response
+                success: function (response) {
+                    console.log(response); // server response
+                    $('#loc').text(response.results[(response.results.length) - 2].formatted_address);
+                    $('#lang').val(lon);
+                    $('#lat').val(lat);
+                    $('#theselected').val($('#loc').text());
+                }
+            });
 
 
-        //do the desired process with the coordinates
-        //alert('the current latitude' + lat + ', the current longitude is' + lon );
-    }
-    function errorHandling(error) {
-        switch (error.code) {
-            case error.TIMEOUT:
-                alert('Geolocation Timeout');
-                break;
-            case error.POSITION_UNAVAILABLE:
-                alert('Position Unavailable');
-                break;
-            case error.PERMISSION_DENIED:
-                alert('Permission Denied');
-                break;
-            default:
-                alert('Unknown Error : ' + error.code);
+            //do the desired process with the coordinates
+            //alert('the current latitude' + lat + ', the current longitude is' + lon );
         }
-    }
-    var options = {
-        enableHighAccuracy: true,
-        timeout: 15000
-    };
 
+        function errorHandling(error) {
+            switch (error.code) {
+                case error.TIMEOUT:
+                    alert('Geolocation Timeout');
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert('Position Unavailable');
+                    break;
+                case error.PERMISSION_DENIED:
+                    alert('Permission Denied');
+                    break;
+                default:
+                    alert('Unknown Error : ' + error.code);
+            }
+        }
+
+        var options = {
+            enableHighAccuracy: true,
+            timeout: 15000
+        };
+    };
+    $(document).ready(ready);
+    $(document).on('page:load', ready);
 </script>
